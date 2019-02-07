@@ -1,0 +1,277 @@
+--------------------------------------------------------------------------------------------------------------------------------------------
+-- PRR rolling 6 month and year
+-------------------------------------------------------------------------------------------------------------------------------------------- 
+--1 Aug
+SELECT LABEL, COUNT(GREEN), COUNT(YELLOW), COUNT(RED)
+FROM(SELECT LABEL, DUNS,
+       CASE WHEN SUM(FAIL_MTHS) > 2 THEN 1 ELSE NULL END AS RED,
+       CASE WHEN SUM(FAIL_MTHS) = 1 THEN 1 ELSE NULL END AS YELLOW,
+       CASE WHEN SUM(FAIL_MTHS) = 0 THEN 1 ELSE NULL END AS GREEN
+     FROM (SELECT LABEL, DUNS, COUNT(*) AS MTHS_INC, SUM(RED_SCORE) AS FAIL_MTHS
+           FROM (SELECT MONTH_ID, YEAR_ID, DUNS, TO_CHAR(ADD_MONTHS(sysdate, -6), 'Month') || '-' || EXTRACT(year FROM ADD_MONTHS(sysdate, -1)) AS LABEL,
+                 CASE WHEN MTD_ADJ_SHIP <0.9 THEN 1 ELSE 0 END AS RED_SCORE 
+                 FROM WKL_OTS_MONTH_AND_YTD_DATA_VW
+                 WHERE REGION='GME'  
+                 AND (MONTH_ID, YEAR_ID) IN 
+                    ((EXTRACT(month FROM ADD_MONTHS(sysdate, -2)), EXTRACT(year FROM ADD_MONTHS(sysdate, -2))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -3)), EXTRACT(year FROM ADD_MONTHS(sysdate, -3))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -4)), EXTRACT(year FROM ADD_MONTHS(sysdate, -4))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -5)), EXTRACT(year FROM ADD_MONTHS(sysdate, -5))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -6)), EXTRACT(year FROM ADD_MONTHS(sysdate, -6))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -7)), EXTRACT(year FROM ADD_MONTHS(sysdate, -7))))) BASE   
+           GROUP BY LABEL, DUNS)
+     GROUP BY LABEL, DUNS)
+GROUP BY LABEL
+
+UNION ALL
+--2 July
+SELECT LABEL, COUNT(GREEN), COUNT(YELLOW), COUNT(RED)
+FROM(SELECT LABEL, DUNS,
+       CASE WHEN SUM(FAIL_MTHS) > 2 THEN 1 ELSE NULL END AS RED,
+       CASE WHEN SUM(FAIL_MTHS) = 1 THEN 1 ELSE NULL END AS YELLOW,
+       CASE WHEN SUM(FAIL_MTHS) = 0 THEN 1 ELSE NULL END AS GREEN
+     FROM (SELECT LABEL, DUNS, COUNT(*) AS MTHS_INC, SUM(RED_SCORE) AS FAIL_MTHS
+           FROM (SELECT MONTH_ID, YEAR_ID, DUNS, TO_CHAR(ADD_MONTHS(sysdate, -7), 'Month') || '-' || EXTRACT(year FROM ADD_MONTHS(sysdate, -1)) AS LABEL,
+                 CASE WHEN MTD_ADJ_SHIP <0.9 THEN 1 ELSE 0 END AS RED_SCORE 
+                 FROM WKL_OTS_MONTH_AND_YTD_DATA_VW
+                 WHERE REGION='GME'  
+                 AND (MONTH_ID, YEAR_ID) IN 
+                    ((EXTRACT(month FROM ADD_MONTHS(sysdate, -1)), EXTRACT(year FROM ADD_MONTHS(sysdate, -1))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -2)), EXTRACT(year FROM ADD_MONTHS(sysdate, -2))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -3)), EXTRACT(year FROM ADD_MONTHS(sysdate, -3))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -4)), EXTRACT(year FROM ADD_MONTHS(sysdate, -4))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -5)), EXTRACT(year FROM ADD_MONTHS(sysdate, -5))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -6)), EXTRACT(year FROM ADD_MONTHS(sysdate, -6))))) BASE   
+           GROUP BY LABEL, DUNS)
+     GROUP BY LABEL, DUNS)
+GROUP BY LABEL
+
+UNION ALL
+--3 June
+SELECT LABEL, COUNT(GREEN), COUNT(YELLOW), COUNT(RED)
+FROM(SELECT LABEL, DUNS,
+       CASE WHEN SUM(FAIL_MTHS) > 2 THEN 1 ELSE NULL END AS RED,
+       CASE WHEN SUM(FAIL_MTHS) = 1 THEN 1 ELSE NULL END AS YELLOW,
+       CASE WHEN SUM(FAIL_MTHS) = 0 THEN 1 ELSE NULL END AS GREEN
+     FROM (SELECT LABEL, DUNS, COUNT(*) AS MTHS_INC, SUM(RED_SCORE) AS FAIL_MTHS
+           FROM (SELECT MONTH_ID, YEAR_ID, DUNS, TO_CHAR(ADD_MONTHS(sysdate, -8), 'Month') || '-' || EXTRACT(year FROM ADD_MONTHS(sysdate, -1)) AS LABEL,
+                 CASE WHEN MTD_ADJ_SHIP <0.9 THEN 1 ELSE 0 END AS RED_SCORE 
+                 FROM WKL_OTS_MONTH_AND_YTD_DATA_VW
+                 WHERE REGION='GME'  
+                 AND (MONTH_ID, YEAR_ID) IN 
+                    ((EXTRACT(month FROM ADD_MONTHS(sysdate, -12)), EXTRACT(year FROM ADD_MONTHS(sysdate, -12))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -1)), EXTRACT(year FROM ADD_MONTHS(sysdate, -1))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -2)), EXTRACT(year FROM ADD_MONTHS(sysdate, -2))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -3)), EXTRACT(year FROM ADD_MONTHS(sysdate, -3))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -4)), EXTRACT(year FROM ADD_MONTHS(sysdate, -4))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -5)), EXTRACT(year FROM ADD_MONTHS(sysdate, -5))))) BASE   
+           GROUP BY LABEL, DUNS)
+     GROUP BY LABEL, DUNS)
+GROUP BY LABEL
+
+UNION ALL
+--4 may
+SELECT LABEL, COUNT(GREEN), COUNT(YELLOW), COUNT(RED)
+FROM(SELECT LABEL, DUNS,
+       CASE WHEN SUM(FAIL_MTHS) > 2 THEN 1 ELSE NULL END AS RED,
+       CASE WHEN SUM(FAIL_MTHS) = 1 THEN 1 ELSE NULL END AS YELLOW,
+       CASE WHEN SUM(FAIL_MTHS) = 0 THEN 1 ELSE NULL END AS GREEN
+     FROM (SELECT LABEL, DUNS, COUNT(*) AS MTHS_INC, SUM(RED_SCORE) AS FAIL_MTHS
+           FROM (SELECT MONTH_ID, YEAR_ID, DUNS, TO_CHAR(ADD_MONTHS(sysdate, -9), 'Month') || '-' || EXTRACT(year FROM ADD_MONTHS(sysdate, -1)) AS LABEL,
+                 CASE WHEN MTD_ADJ_SHIP <0.9 THEN 1 ELSE 0 END AS RED_SCORE 
+                 FROM WKL_OTS_MONTH_AND_YTD_DATA_VW
+                 WHERE REGION='GME'  
+                 AND (MONTH_ID, YEAR_ID) IN 
+                    ((EXTRACT(month FROM ADD_MONTHS(sysdate, -11)), EXTRACT(year FROM ADD_MONTHS(sysdate, -11))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -12)), EXTRACT(year FROM ADD_MONTHS(sysdate, -12))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -1)), EXTRACT(year FROM ADD_MONTHS(sysdate, -1))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -2)), EXTRACT(year FROM ADD_MONTHS(sysdate, -2))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -3)), EXTRACT(year FROM ADD_MONTHS(sysdate, -3))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -4)), EXTRACT(year FROM ADD_MONTHS(sysdate, -4))))) BASE   
+           GROUP BY LABEL, DUNS)
+     GROUP BY LABEL, DUNS)
+GROUP BY LABEL
+
+UNION ALL
+--5 April
+SELECT LABEL, COUNT(GREEN), COUNT(YELLOW), COUNT(RED)
+FROM(SELECT LABEL, DUNS,
+       CASE WHEN SUM(FAIL_MTHS) > 2 THEN 1 ELSE NULL END AS RED,
+       CASE WHEN SUM(FAIL_MTHS) = 1 THEN 1 ELSE NULL END AS YELLOW,
+       CASE WHEN SUM(FAIL_MTHS) = 0 THEN 1 ELSE NULL END AS GREEN
+     FROM (SELECT LABEL, DUNS, COUNT(*) AS MTHS_INC, SUM(RED_SCORE) AS FAIL_MTHS
+           FROM (SELECT MONTH_ID, YEAR_ID, DUNS, TO_CHAR(ADD_MONTHS(sysdate, -10), 'Month') || '-' || EXTRACT(year FROM ADD_MONTHS(sysdate, -1)) AS LABEL,
+                 CASE WHEN MTD_ADJ_SHIP <0.9 THEN 1 ELSE 0 END AS RED_SCORE 
+                 FROM WKL_OTS_MONTH_AND_YTD_DATA_VW
+                 WHERE REGION='GME'  
+                 AND (MONTH_ID, YEAR_ID) IN 
+                    ((EXTRACT(month FROM ADD_MONTHS(sysdate, -10)), EXTRACT(year FROM ADD_MONTHS(sysdate, -10))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -11)), EXTRACT(year FROM ADD_MONTHS(sysdate, -11))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -12)), EXTRACT(year FROM ADD_MONTHS(sysdate, -12))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -1)), EXTRACT(year FROM ADD_MONTHS(sysdate, -1))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -2)), EXTRACT(year FROM ADD_MONTHS(sysdate, -2))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -3)), EXTRACT(year FROM ADD_MONTHS(sysdate, -3))))) BASE   
+           GROUP BY LABEL, DUNS)
+     GROUP BY LABEL, DUNS)
+GROUP BY LABEL
+
+UNION ALL
+--6 March
+SELECT LABEL, COUNT(GREEN), COUNT(YELLOW), COUNT(RED)
+FROM(SELECT LABEL, DUNS,
+       CASE WHEN SUM(FAIL_MTHS) > 2 THEN 1 ELSE NULL END AS RED,
+       CASE WHEN SUM(FAIL_MTHS) = 1 THEN 1 ELSE NULL END AS YELLOW,
+       CASE WHEN SUM(FAIL_MTHS) = 0 THEN 1 ELSE NULL END AS GREEN
+     FROM (SELECT LABEL, DUNS, COUNT(*) AS MTHS_INC, SUM(RED_SCORE) AS FAIL_MTHS
+           FROM (SELECT MONTH_ID, YEAR_ID, DUNS, TO_CHAR(ADD_MONTHS(sysdate, -11), 'Month') || '-' || EXTRACT(year FROM ADD_MONTHS(sysdate, -1)) AS LABEL,
+                 CASE WHEN MTD_ADJ_SHIP <0.9 THEN 1 ELSE 0 END AS RED_SCORE 
+                 FROM WKL_OTS_MONTH_AND_YTD_DATA_VW
+                 WHERE REGION='GME'  
+                 AND (MONTH_ID, YEAR_ID) IN 
+                    ((EXTRACT(month FROM ADD_MONTHS(sysdate, -9)), EXTRACT(year FROM ADD_MONTHS(sysdate, -9))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -10)), EXTRACT(year FROM ADD_MONTHS(sysdate, -10))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -11)), EXTRACT(year FROM ADD_MONTHS(sysdate, -11))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -12)), EXTRACT(year FROM ADD_MONTHS(sysdate, -12))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -1)), EXTRACT(year FROM ADD_MONTHS(sysdate, -1))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -2)), EXTRACT(year FROM ADD_MONTHS(sysdate, -2))))) BASE   
+           GROUP BY LABEL, DUNS)
+     GROUP BY LABEL, DUNS)
+GROUP BY LABEL
+
+UNION ALL
+--7 feb
+SELECT LABEL, COUNT(GREEN), COUNT(YELLOW), COUNT(RED)
+FROM(SELECT LABEL, DUNS,
+       CASE WHEN SUM(FAIL_MTHS) > 2 THEN 1 ELSE NULL END AS RED,
+       CASE WHEN SUM(FAIL_MTHS) = 1 THEN 1 ELSE NULL END AS YELLOW,
+       CASE WHEN SUM(FAIL_MTHS) = 0 THEN 1 ELSE NULL END AS GREEN
+     FROM (SELECT LABEL, DUNS, COUNT(*) AS MTHS_INC, SUM(RED_SCORE) AS FAIL_MTHS
+           FROM (SELECT MONTH_ID, YEAR_ID, DUNS, TO_CHAR(ADD_MONTHS(sysdate, -12), 'Month') || '-' || EXTRACT(year FROM ADD_MONTHS(sysdate, -1)) AS LABEL,
+                 CASE WHEN MTD_ADJ_SHIP <0.9 THEN 1 ELSE 0 END AS RED_SCORE 
+                 FROM WKL_OTS_MONTH_AND_YTD_DATA_VW
+                 WHERE REGION='GME'  
+                 AND (MONTH_ID, YEAR_ID) IN 
+                    ((EXTRACT(month FROM ADD_MONTHS(sysdate, -8)), EXTRACT(year FROM ADD_MONTHS(sysdate, -8))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -9)), EXTRACT(year FROM ADD_MONTHS(sysdate, -9))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -10)), EXTRACT(year FROM ADD_MONTHS(sysdate, -10))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -11)), EXTRACT(year FROM ADD_MONTHS(sysdate, -11))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -12)), EXTRACT(year FROM ADD_MONTHS(sysdate, -12))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -1)), EXTRACT(year FROM ADD_MONTHS(sysdate, -1))))) BASE   
+           GROUP BY LABEL, DUNS)
+     GROUP BY LABEL, DUNS)
+GROUP BY LABEL
+
+UNION ALL
+--8 January
+SELECT LABEL, COUNT(GREEN), COUNT(YELLOW), COUNT(RED)
+FROM(SELECT LABEL, DUNS,
+       CASE WHEN SUM(FAIL_MTHS) > 2 THEN 1 ELSE NULL END AS RED,
+       CASE WHEN SUM(FAIL_MTHS) = 1 THEN 1 ELSE NULL END AS YELLOW,
+       CASE WHEN SUM(FAIL_MTHS) = 0 THEN 1 ELSE NULL END AS GREEN
+     FROM (SELECT LABEL, DUNS, COUNT(*) AS MTHS_INC, SUM(RED_SCORE) AS FAIL_MTHS
+           FROM (SELECT MONTH_ID, YEAR_ID, DUNS, TO_CHAR(ADD_MONTHS(sysdate, -1), 'Month') || '-' || EXTRACT(year FROM ADD_MONTHS(sysdate, -1)) AS LABEL,
+                 CASE WHEN MTD_ADJ_SHIP <0.9 THEN 1 ELSE 0 END AS RED_SCORE 
+                 FROM WKL_OTS_MONTH_AND_YTD_DATA_VW
+                 WHERE REGION='GME'  
+                 AND (MONTH_ID, YEAR_ID) IN 
+                    ((EXTRACT(month FROM ADD_MONTHS(sysdate, -7)), EXTRACT(year FROM ADD_MONTHS(sysdate, -7))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -8)), EXTRACT(year FROM ADD_MONTHS(sysdate, -8))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -9)), EXTRACT(year FROM ADD_MONTHS(sysdate, -9))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -10)), EXTRACT(year FROM ADD_MONTHS(sysdate, -10))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -11)), EXTRACT(year FROM ADD_MONTHS(sysdate, -11))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -12)), EXTRACT(year FROM ADD_MONTHS(sysdate, -12))))) BASE   
+           GROUP BY LABEL, DUNS)
+     GROUP BY LABEL, DUNS)
+GROUP BY LABEL
+
+UNION ALL
+--9 december
+SELECT LABEL, COUNT(GREEN), COUNT(YELLOW), COUNT(RED)
+FROM(SELECT LABEL, DUNS,
+       CASE WHEN SUM(FAIL_MTHS) > 2 THEN 1 ELSE NULL END AS RED,
+       CASE WHEN SUM(FAIL_MTHS) = 1 THEN 1 ELSE NULL END AS YELLOW,
+       CASE WHEN SUM(FAIL_MTHS) = 0 THEN 1 ELSE NULL END AS GREEN
+     FROM (SELECT LABEL, DUNS, COUNT(*) AS MTHS_INC, SUM(RED_SCORE) AS FAIL_MTHS
+           FROM (SELECT MONTH_ID, YEAR_ID, DUNS, TO_CHAR(ADD_MONTHS(sysdate, -2), 'Month') || '-' || EXTRACT(year FROM ADD_MONTHS(sysdate, -1)) AS LABEL,
+                 CASE WHEN MTD_ADJ_SHIP <0.9 THEN 1 ELSE 0 END AS RED_SCORE 
+                 FROM WKL_OTS_MONTH_AND_YTD_DATA_VW
+                 WHERE REGION='GME'  
+                 AND (MONTH_ID, YEAR_ID) IN 
+                    ((EXTRACT(month FROM ADD_MONTHS(sysdate, -6)), EXTRACT(year FROM (sysdate))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -7)), EXTRACT(year FROM (sysdate))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -8)), EXTRACT(year FROM (sysdate))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -9)), EXTRACT(year FROM (sysdate))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -10)), EXTRACT(year FROM (sysdate))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -11)), EXTRACT(year FROM (sysdate ))))) BASE   
+           GROUP BY LABEL, DUNS)
+     GROUP BY LABEL, DUNS)
+GROUP BY LABEL
+
+UNION ALL
+--10 November
+SELECT LABEL, COUNT(GREEN), COUNT(YELLOW), COUNT(RED)
+FROM(SELECT LABEL, DUNS,
+       CASE WHEN SUM(FAIL_MTHS) > 2 THEN 1 ELSE NULL END AS RED,
+       CASE WHEN SUM(FAIL_MTHS) = 1 THEN 1 ELSE NULL END AS YELLOW,
+       CASE WHEN SUM(FAIL_MTHS) = 0 THEN 1 ELSE NULL END AS GREEN
+     FROM (SELECT LABEL, DUNS, COUNT(*) AS MTHS_INC, SUM(RED_SCORE) AS FAIL_MTHS
+           FROM (SELECT MONTH_ID, YEAR_ID, DUNS, TO_CHAR(ADD_MONTHS(sysdate, -3), 'Month') || '-' || EXTRACT(year FROM ADD_MONTHS(sysdate, -1)) AS LABEL,
+                 CASE WHEN MTD_ADJ_SHIP <0.9 THEN 1 ELSE 0 END AS RED_SCORE 
+                 FROM WKL_OTS_MONTH_AND_YTD_DATA_VW
+                 WHERE REGION='GME'  
+                 AND (MONTH_ID, YEAR_ID) IN 
+                    ((EXTRACT(month FROM ADD_MONTHS(sysdate, -5)), EXTRACT(year FROM ADD_MONTHS(sysdate, -5))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -6)), EXTRACT(year FROM ADD_MONTHS(sysdate, -6))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -7)), EXTRACT(year FROM ADD_MONTHS(sysdate, -7))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -8)), EXTRACT(year FROM ADD_MONTHS(sysdate, -8))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -9)), EXTRACT(year FROM ADD_MONTHS(sysdate, -9))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -10)), EXTRACT(year FROM ADD_MONTHS(sysdate, -10))))) BASE   
+           GROUP BY LABEL, DUNS)
+     GROUP BY LABEL, DUNS)
+GROUP BY LABEL
+
+UNION ALL
+--11 October
+SELECT LABEL, COUNT(GREEN), COUNT(YELLOW), COUNT(RED)
+FROM(SELECT LABEL, DUNS,
+       CASE WHEN SUM(FAIL_MTHS) > 2 THEN 1 ELSE NULL END AS RED,
+       CASE WHEN SUM(FAIL_MTHS) = 1 THEN 1 ELSE NULL END AS YELLOW,
+       CASE WHEN SUM(FAIL_MTHS) = 0 THEN 1 ELSE NULL END AS GREEN
+     FROM (SELECT LABEL, DUNS, COUNT(*) AS MTHS_INC, SUM(RED_SCORE) AS FAIL_MTHS
+           FROM (SELECT MONTH_ID, YEAR_ID, DUNS, TO_CHAR(ADD_MONTHS(sysdate, -4), 'Month') || '-' || EXTRACT(year FROM ADD_MONTHS(sysdate, -1)) AS LABEL,
+                 CASE WHEN MTD_ADJ_SHIP <0.9 THEN 1 ELSE 0 END AS RED_SCORE 
+                 FROM WKL_OTS_MONTH_AND_YTD_DATA_VW
+                 WHERE REGION='GME'  
+                 AND (MONTH_ID, YEAR_ID) IN 
+                    ((EXTRACT(month FROM ADD_MONTHS(sysdate, -4)), EXTRACT(year FROM ADD_MONTHS(sysdate, -4))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -5)), EXTRACT(year FROM ADD_MONTHS(sysdate, -5))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -6)), EXTRACT(year FROM ADD_MONTHS(sysdate, -6))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -7)), EXTRACT(year FROM ADD_MONTHS(sysdate, -7))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -8)), EXTRACT(year FROM ADD_MONTHS(sysdate, -8))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -9)), EXTRACT(year FROM ADD_MONTHS(sysdate, -9))))) BASE   
+           GROUP BY LABEL, DUNS)
+     GROUP BY LABEL, DUNS)
+GROUP BY LABEL
+
+UNION ALL
+--12 september
+SELECT LABEL, COUNT(GREEN), COUNT(YELLOW), COUNT(RED)
+FROM(SELECT LABEL, DUNS,
+       CASE WHEN SUM(FAIL_MTHS) > 2 THEN 1 ELSE NULL END AS RED,
+       CASE WHEN SUM(FAIL_MTHS) = 1 THEN 1 ELSE NULL END AS YELLOW,
+       CASE WHEN SUM(FAIL_MTHS) = 0 THEN 1 ELSE NULL END AS GREEN
+     FROM (SELECT LABEL, DUNS, COUNT(*) AS MTHS_INC, SUM(RED_SCORE) AS FAIL_MTHS
+           FROM (SELECT MONTH_ID, YEAR_ID, DUNS, TO_CHAR(ADD_MONTHS(sysdate, -5), 'Month') || '-' || EXTRACT(year FROM ADD_MONTHS(sysdate, -1)) AS LABEL,
+                 CASE WHEN MTD_ADJ_SHIP <0.9 THEN 1 ELSE 0 END AS RED_SCORE 
+                 FROM WKL_OTS_MONTH_AND_YTD_DATA_VW
+                 WHERE REGION='GME'  
+                 AND (MONTH_ID, YEAR_ID) IN 
+                    ((EXTRACT(month FROM ADD_MONTHS(sysdate, -3)), EXTRACT(year FROM ADD_MONTHS(sysdate, -3))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -4)), EXTRACT(year FROM ADD_MONTHS(sysdate, -4))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -5)), EXTRACT(year FROM ADD_MONTHS(sysdate, -5))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -6)), EXTRACT(year FROM ADD_MONTHS(sysdate, -6))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -7)), EXTRACT(year FROM ADD_MONTHS(sysdate, -7))), 
+                     (EXTRACT(month FROM ADD_MONTHS(sysdate, -8)), EXTRACT(year FROM ADD_MONTHS(sysdate, -8))))) BASE   
+           GROUP BY LABEL, DUNS)
+     GROUP BY LABEL, DUNS)
+GROUP BY LABEL
